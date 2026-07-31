@@ -8,7 +8,15 @@ TokenMe 是一款面向 Codex、GPT、Claude 等 AI 工具用户的高速直连�
 
 Codex 工具、GPT 工具、Claude 工具、无限续杯工具、高速直连号池、真实模型、模型保真、低延迟响应、稳定在线、桌面客户端、AI 生产力工具。
 
-## 下载
+## 下载地址
+
+最新版下载：
+
+https://github.com/Neuxsbot/tokenme-download/releases/latest
+
+直连软件教程：
+
+https://www.token.me.uk/docs
 
 请到右侧 Releases 下载最新版 Windows 压缩包：
 
@@ -16,9 +24,21 @@ Codex 工具、GPT 工具、Claude 工具、无限续杯工具、高速直连号
 - 解压后运行安装程序
 - 登录账号后点击“开始起飞”
 
-最新版下载地址：
+## 直连软件使用流程
 
-https://github.com/Neuxsbot/tokenme-download/releases/latest
+1. 打开下载地址，下载最新版 TokenMe Windows x64 压缩包
+2. 解压文件，运行安装程序
+3. 打开 TokenMe 桌面端
+4. 使用 TokenMe 账号登录
+5. 确认余额、订阅组、号池状态正常
+6. 点击“开始起飞”
+7. 打开 Codex / GPT / Claude 等工具开始使用
+
+网络说明：
+
+- 电信、联通、海外线路一般直接使用即可
+- 只有移动网络遇到连接不稳定时，才需要开启代理
+- 如果不是移动网，不建议额外开代理，直接使用更稳
 
 ## 适合谁用
 
@@ -45,14 +65,16 @@ TokenMe 通过高速直连号池提供稳定可用的连接体验。软件内可
 
 账号、余额、订阅组、号池状态集中显示。登录后自动同步配置，点击“开始起飞”即可使用。
 
-## 使用步骤
+## macOS 版本 / Linux 版本
 
-1. 下载 Release 里的 Windows 压缩包
-2. 解压文件
-3. 运行安装程序
-4. 打开 TokenMe 并登录账号
-5. 查看余额、订阅组、号池状态
-6. 点击“开始起飞”
+目前已提供 Windows x64 版本。
+
+macOS 和 Linux 版本需要分别在对应系统环境打包：
+
+- macOS 版本：需要在 macOS 机器上打包，生成 .dmg 或 .app
+- Linux 版本：需要在 Linux 机器上打包，生成 .AppImage / .deb / .rpm
+- Windows 机器不能直接打出可正常签名和验证的 macOS 安装包
+- 如果只是内测，可以先提供源码项目的跨平台构建包；如果正式发用户，建议用 GitHub Actions 分系统自动打包
 
 ## 宣传图
 
