@@ -20,8 +20,9 @@ https://www.token.me.uk/docs
 
 请到右侧 Releases 按系统下载最新版：
 
-- TokenMe Windows x64
-- 解压后运行安装程序
+- TokenMe Windows x64 绿色版 / 更新包
+- macOS Universal DMG
+- Linux x64 AppImage / DEB
 - 登录账号后点击“开始起飞”
 
 ## 直连软件使用流程
@@ -65,7 +66,17 @@ TokenMe 通过高速直连号池提供稳定可用的连接体验。软件内可
 
 账号、余额、订阅组、号池状态集中显示。登录后自动同步配置，点击“开始起飞”即可使用。
 
-## macOS 版本 / Linux 版本`r`n`r`nv4.4.36 已提供三平台构建包：`r`n`r`n- Windows x64：绿色版 / 更新包和 setup 安装包`r`n- macOS Universal：`.dmg`，支持 Intel 与 Apple Silicon`r`n- Linux x64：`.AppImage` 与 `.deb` 任选其一`r`n`r`n三平台均由 GitHub Actions 分系统构建，用户直接从 Releases 选择对应文件即可。`r`n`r`n## 宣传图
+## macOS 版本 / Linux 版本
+
+v4.4.36 已提供三平台构建包：
+
+- Windows x64：绿色版 / 更新包和 setup 安装包
+- macOS Universal：DMG，支持 Intel 与 Apple Silicon
+- Linux x64：AppImage 与 DEB 任选其一
+
+三平台均由 GitHub Actions 分系统构建，用户直接从 Releases 选择对应文件即可。
+
+## 宣传图
 
 ![卖点介绍](promo-images/tokenme-feature-cards.png)
 
