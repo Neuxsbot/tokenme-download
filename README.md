@@ -26,7 +26,7 @@ https://www.token.me.uk/docs
 
 ## 直连软件使用流程
 
-1. 打开下载地址，下载最新版 TokenMe Windows x64 压缩包
+1. 打开下载地址，按系统下载最新版 TokenMe
 2. 解压文件，运行安装程序
 3. 打开 TokenMe 桌面端
 4. 使用 TokenMe 账号登录
@@ -65,18 +65,7 @@ TokenMe 通过高速直连号池提供稳定可用的连接体验。软件内可
 
 账号、余额、订阅组、号池状态集中显示。登录后自动同步配置，点击“开始起飞”即可使用。
 
-## macOS 版本 / Linux 版本
-
-目前已提供 Windows x64 版本。
-
-macOS 和 Linux 版本需要分别在对应系统环境打包：
-
-- macOS 版本：需要在 macOS 机器上打包，生成 .dmg 或 .app
-- Linux 版本：需要在 Linux 机器上打包，生成 .AppImage / .deb / .rpm
-- Windows 机器不能直接打出可正常签名和验证的 macOS 安装包
-- 如果只是内测，可以先提供源码项目的跨平台构建包；如果正式发用户，建议用 GitHub Actions 分系统自动打包
-
-## 宣传图
+## macOS 版本 / Linux 版本`r`n`r`nv4.4.36 已提供三平台构建包：`r`n`r`n- Windows x64：绿色版 / 更新包和 setup 安装包`r`n- macOS Universal：`.dmg`，支持 Intel 与 Apple Silicon`r`n- Linux x64：`.AppImage` 与 `.deb` 任选其一`r`n`r`n三平台均由 GitHub Actions 分系统构建，用户直接从 Releases 选择对应文件即可。`r`n`r`n## 宣传图
 
 ![卖点介绍](promo-images/tokenme-feature-cards.png)
 
