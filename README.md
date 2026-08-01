@@ -18,7 +18,7 @@ https://github.com/Neuxsbot/tokenme-download/releases/latest
 
 https://www.token.me.uk/docs
 
-请到右侧 Releases 下载最新版 Windows 压缩包：
+请到右侧 Releases 按系统下载最新版：
 
 - TokenMe Windows x64
 - 解压后运行安装程序
