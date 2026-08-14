@@ -1,0 +1,114 @@
+name: Build private TokenMe desktop releases
+
+on:
+  workflow_dispatch:
+    inputs:
+      source_tag:
+        description: Private source tag
+        required: true
+        default: v4.4.52
+      release_tag:
+        description: Public download release tag
+        required: true
+        default: v4.4.52
+
+permissions:
+  contents: write
+
+jobs:
+  build:
+    name: ${{ matrix.name }}
+    runs-on: ${{ matrix.os }}
+    strategy:
+      fail-fast: false
+      matrix:
+        include:
+          - name: macOS universal
+            os: macos-latest
+            args: --target universal-apple-darwin --bundles dmg
+          - name: Linux x64
+            os: ubuntu-22.04
+            args: --bundles appimage,deb
+
+    steps:
+      - name: Checkout private source
+        uses: actions/checkout@v4
+        with:
+          repository: Neuxsbot/tokenme-desktop-build
+          ref: ${{ inputs.source_tag }}
+          token: ${{ secrets.TOKENME_BUILD_REPO_TOKEN }}
+          persist-credentials: false
+
+      - name: Install Linux dependencies
+        if: runner.os == 'Linux'
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y \
+            libwebkit2gtk-4.1-dev \
+            libayatana-appindicator3-dev \
+            librsvg2-dev \
+            patchelf \
+            build-essential \
+            curl \
+            wget \
+            file
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 20
+          cache: npm
+
+      - name: Setup Rust
+        uses: dtolnay/rust-toolchain@stable
+
+      - name: Add macOS Rust targets
+        if: runner.os == 'macOS'
+        run: rustup target add aarch64-apple-darwin x86_64-apple-darwin
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Verify source
+        run: |
+          node --check src/server.js
+          node --check public/assets/app.js
+          cargo check --manifest-path src-tauri/Cargo.toml
+
+      - name: Build Tauri bundle
+        run: npm exec tauri build -- ${{ matrix.args }}
+
+      - name: Stage named release assets
+        shell: bash
+        run: |
+          set -euo pipefail
+          version='${{ inputs.release_tag }}'
+          version="${version#v}"
+          mkdir -p release-assets
+          if [[ '${{ runner.os }}' == 'macOS' ]]; then
+            source_file="$(find src-tauri/target/universal-apple-darwin/release/bundle/dmg -maxdepth 1 -type f -name '*.dmg' | head -n 1)"
+            test -n "$source_file"
+            cp "$source_file" "release-assets/TokenMe-macOS-universal-v${version}.dmg"
+          else
+            appimage="$(find src-tauri/target/release/bundle/appimage -maxdepth 1 -type f -name '*.AppImage' | head -n 1)"
+            deb="$(find src-tauri/target/release/bundle/deb -maxdepth 1 -type f -name '*.deb' | head -n 1)"
+            test -n "$appimage"
+            test -n "$deb"
+            cp "$appimage" "release-assets/TokenMe-Linux-x64-v${version}.AppImage"
+            cp "$deb" "release-assets/TokenMe-Linux-x64-v${version}.deb"
+          fi
+
+      - name: Upload workflow artifacts
+        uses: actions/upload-artifact@v4
+        with:
+          name: tokenme-${{ matrix.name }}-${{ inputs.release_tag }}
+          path: release-assets/*
+          if-no-files-found: error
+
+      - name: Upload public release assets
+        uses: softprops/action-gh-release@v2
+        with:
+          repository: Neuxsbot/tokenme-download
+          tag_name: ${{ inputs.release_tag }}
+          files: release-assets/*
+          fail_on_unmatched_files: true
