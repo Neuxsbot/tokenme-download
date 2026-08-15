@@ -89,28 +89,29 @@ jobs:
         run: npm exec tauri build -- ${{ matrix.args }}
 
       - name: Stage named release assets
-        shell: bash
+        shell: pwsh
         run: |
-          set -euo pipefail
-          version='${{ env.RELEASE_TAG }}'
-          version="${version#v}"
-          mkdir -p release-assets
-          if [[ '${{ runner.os }}' == 'Windows' ]]; then
-            source_file="$(find src-tauri/target/release/bundle/nsis -maxdepth 1 -type f -name '*.exe' | head -n 1)"
-            test -n "$source_file"
-            cp "$source_file" "release-assets/TokenMe-Windows-x64-v${version}-绿色版-无需安装.exe"
-          elif [[ '${{ runner.os }}' == 'macOS' ]]; then
-            source_file="$(find src-tauri/target/universal-apple-darwin/release/bundle/dmg -maxdepth 1 -type f -name '*.dmg' | head -n 1)"
-            test -n "$source_file"
-            cp "$source_file" "release-assets/TokenMe-macOS-universal-v${version}.dmg"
-          else
-            appimage="$(find src-tauri/target/release/bundle/appimage -maxdepth 1 -type f -name '*.AppImage' | head -n 1)"
-            deb="$(find src-tauri/target/release/bundle/deb -maxdepth 1 -type f -name '*.deb' | head -n 1)"
-            test -n "$appimage"
-            test -n "$deb"
-            cp "$appimage" "release-assets/TokenMe-Linux-x64-v${version}.AppImage"
-            cp "$deb" "release-assets/TokenMe-Linux-x64-v${version}.deb"
-          fi
+          $ErrorActionPreference = 'Stop'
+          $version = '${{ env.RELEASE_TAG }}' -replace '^v', ''
+          New-Item -ItemType Directory -Force -Path release-assets | Out-Null
+
+          if ('${{ runner.os }}' -eq 'Windows') {
+            $sourceFile = Get-ChildItem -Path 'src-tauri/target/release/bundle/nsis' -Filter '*.exe' -File | Select-Object -First 1
+            if (-not $sourceFile) { throw 'Windows bundle exe not found' }
+            Copy-Item -LiteralPath $sourceFile.FullName -Destination "release-assets/TokenMe-Windows-x64-v$version-绿色版-无需安装.exe"
+            Copy-Item -LiteralPath $sourceFile.FullName -Destination "release-assets/TokenMe-Windows-x64-v$version-green-portable.exe"
+          } elseif ('${{ runner.os }}' -eq 'macOS') {
+            $sourceFile = Get-ChildItem -Path 'src-tauri/target/universal-apple-darwin/release/bundle/dmg' -Filter '*.dmg' -File | Select-Object -First 1
+            if (-not $sourceFile) { throw 'macOS dmg not found' }
+            Copy-Item -LiteralPath $sourceFile.FullName -Destination "release-assets/TokenMe-macOS-universal-v$version.dmg"
+          } else {
+            $appImage = Get-ChildItem -Path 'src-tauri/target/release/bundle/appimage' -Filter '*.AppImage' -File | Select-Object -First 1
+            $deb = Get-ChildItem -Path 'src-tauri/target/release/bundle/deb' -Filter '*.deb' -File | Select-Object -First 1
+            if (-not $appImage) { throw 'Linux AppImage not found' }
+            if (-not $deb) { throw 'Linux deb not found' }
+            Copy-Item -LiteralPath $appImage.FullName -Destination "release-assets/TokenMe-Linux-x64-v$version.AppImage"
+            Copy-Item -LiteralPath $deb.FullName -Destination "release-assets/TokenMe-Linux-x64-v$version.deb"
+          }
 
       - name: Upload workflow artifacts
         uses: actions/upload-artifact@v4
