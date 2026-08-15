@@ -68,7 +68,7 @@ TokenMe 通过高速直连号池提供稳定可用的连接体验。软件内可
 
 ## macOS 版本 / Linux 版本
 
-v4.4.36 已提供三平台构建包：
+v4.4.52 已提供三平台构建包：
 
 - Windows x64：绿色版 / 更新包和 setup 安装包
 - macOS Universal：DMG，支持 Intel 与 Apple Silicon
