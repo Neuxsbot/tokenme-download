@@ -6,11 +6,11 @@ on:
       source_tag:
         description: Private source tag
         required: true
-        default: v4.4.52
+        default: v4.4.54
       release_tag:
         description: Public download release tag
         required: true
-        default: v4.4.52
+        default: v4.4.54
 
 permissions:
   contents: write
@@ -23,6 +23,9 @@ jobs:
       fail-fast: false
       matrix:
         include:
+          - name: Windows x64
+            os: windows-latest
+            args: --bundles nsis
           - name: macOS universal
             os: macos-latest
             args: --target universal-apple-darwin --bundles dmg
@@ -85,7 +88,11 @@ jobs:
           version='${{ inputs.release_tag }}'
           version="${version#v}"
           mkdir -p release-assets
-          if [[ '${{ runner.os }}' == 'macOS' ]]; then
+          if [[ '${{ runner.os }}' == 'Windows' ]]; then
+            source_file="$(find src-tauri/target/release/bundle/nsis -maxdepth 1 -type f -name '*.exe' | head -n 1)"
+            test -n "$source_file"
+            cp "$source_file" "release-assets/TokenMe-Windows-x64-v${version}-绿色版-无需安装.exe"
+          elif [[ '${{ runner.os }}' == 'macOS' ]]; then
             source_file="$(find src-tauri/target/universal-apple-darwin/release/bundle/dmg -maxdepth 1 -type f -name '*.dmg' | head -n 1)"
             test -n "$source_file"
             cp "$source_file" "release-assets/TokenMe-macOS-universal-v${version}.dmg"
