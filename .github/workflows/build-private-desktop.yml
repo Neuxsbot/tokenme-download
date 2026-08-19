@@ -6,11 +6,11 @@ on:
       source_tag:
         description: Private source tag
         required: true
-        default: v4.4.54
+        default: v4.4.62
       release_tag:
         description: Public download release tag
         required: true
-        default: v4.4.54
+        default: v4.4.62
   push:
     tags:
       - 'v*'

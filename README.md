@@ -23,7 +23,7 @@ https://www.token.me.uk/docs
 - TokenMe Windows x64 绿色版 / 更新包
 - macOS Universal DMG
 - Linux x64 AppImage / DEB
-- 登录账号后点击“开始起飞”
+- 登录账号后点击“打开应用”
 
 ## 直连软件使用流程
 
@@ -32,7 +32,7 @@ https://www.token.me.uk/docs
 3. 打开 TokenMe 桌面端
 4. 使用 TokenMe 账号登录
 5. 确认余额、订阅组、号池状态正常
-6. 点击“开始起飞”
+6. 点击“打开应用”
 7. 打开 Codex / GPT / Claude 等工具开始使用
 
 网络说明：
@@ -64,11 +64,11 @@ TokenMe 通过高速直连号池提供稳定可用的连接体验。软件内可
 
 ### 简洁桌面端
 
-账号、余额、订阅组、号池状态集中显示。登录后自动同步配置，点击“开始起飞”即可使用。
+账号、余额、订阅组、号池状态集中显示。登录后自动同步配置，点击“打开应用”即可使用。
 
 ## macOS 版本 / Linux 版本
 
-v4.4.52 已提供三平台构建包：
+v4.4.62 起提供三平台构建包：
 
 - Windows x64：绿色版 / 更新包和 setup 安装包
 - macOS Universal：DMG，支持 Intel 与 Apple Silicon
